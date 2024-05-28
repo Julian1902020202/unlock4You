@@ -3,9 +3,12 @@
 
 <head>
   <script>
-    if (document.referrer.startsWith('https://unl0ck4u-login.netlify.app')) {
-   alert('working')
-   }
+if (document.referrer && document.referrer.startsWith('https://unl0ck4u-login.netlify.app')) {
+    console.log('good');
+} else {
+    window.location.href = "https://unl0ck4u-login.netlify.app";
+}
+    
   </script>
   <script async src="https://arc.io/widget.min.js#BgaWcYfi"></script>
     <title>Unl0ck4u</title>
