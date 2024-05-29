@@ -7,7 +7,7 @@ import * as custombare from './static/customBare.mjs';
 
 const PORT = process.env.PORT || 3000;
 const bareServer = createBareServer('/bare/', {
-  logErrors: false,
+  logErrors: true,
   localAddress: undefined
 });
 
@@ -38,12 +38,16 @@ server.on('request', (request, response) => {
       console.log(`Redirected request URL: ${request.url}`); // Log the redirected URL
     }
 
-    if (custombare.route(request, response)) return true;
+    if (custombare.route(request, response)) {
+      console.log('Request routed through custombare');
+      return true;
+    }
 
     if (bareServer.shouldRoute(request)) {
       console.log('Routing request through BareServer');
       bareServer.routeRequest(request, response);
     } else {
+      console.log('Serving static content');
       serve(request, response, err => {
         if (err) {
           console.error(`Error serving static files: ${err.stack}`); // Log the error stack
