@@ -361,7 +361,7 @@ function resetViews() {
 function log() {
   setTimeout(console.log.bind(console, "%cWelcome To Unl0ck4u", "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"));
   setTimeout(console.log.bind(console, "%c If you are seeing this, Unl0ck4u's main script has succesfully loaded!", "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"));
-  setTimeout(alert('test'))
+  setTimeout(alert('testing'))
   let enabledCookies = navigator.cookieEnabled;
   let appName = navigator.appName; // @deprecated
   let product = navigator.product; // @deprecated
