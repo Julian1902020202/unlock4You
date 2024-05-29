@@ -24,15 +24,18 @@ const server = http.createServer();
 server.on('request', (request, response) => {
   try {
     const { url } = request;
+    console.log(`Incoming request URL: ${url}`); // Log the incoming URL
 
     // Check if the URL matches the pattern /url/google.com
     const match = url.match(/^\/url\/(.+)/);
 
     if (match) {
       const targetUrl = match[1];
+      console.log(`Matched target URL: ${targetUrl}`); // Log the matched target URL
 
       // Redirect the request to the proxy server
       request.url = `/bare/v2/${encodeURIComponent(targetUrl)}`;
+      console.log(`Redirected request URL: ${request.url}`); // Log the redirected URL
     }
 
     if (custombare.route(request, response)) return true;
@@ -41,13 +44,17 @@ server.on('request', (request, response) => {
       bareServer.routeRequest(request, response);
     } else {
       serve(request, response, err => {
-        response.writeHead(err?.statusCode || 500, null, {
-          "Content-Type": "text/plain"
-        });
-        response.end(err?.stack);
+        if (err) {
+          console.error(`Error serving static files: ${err.stack}`); // Log the error stack
+          response.writeHead(err.statusCode || 500, null, {
+            "Content-Type": "text/plain"
+          });
+          response.end(err.stack);
+        }
       });
     }
   } catch (e) {
+    console.error(`Server error: ${e.stack}`); // Log the server error
     response.writeHead(500, "Internal Server Error", {
       "Content-Type": "text/plain"
     });
