@@ -41,6 +41,7 @@ server.on('request', (request, response) => {
     if (custombare.route(request, response)) return true;
 
     if (bareServer.shouldRoute(request)) {
+      console.log('Routing request through BareServer');
       bareServer.routeRequest(request, response);
     } else {
       serve(request, response, err => {
@@ -64,6 +65,7 @@ server.on('request', (request, response) => {
 
 server.on('upgrade', (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
+    console.log('Upgrading request through BareServer');
     bareServer.routeUpgrade(req, socket, head);
   } else {
     socket.end();
