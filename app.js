@@ -59,5 +59,4 @@ if (process.env.UNSAFE_CONTINUE)
     console.error("UNSAFELY CONTINUING EXECUTION")
     console.error()
   })
-alert('test')
 console.log(`Server running at http://localhost:${PORT}/.`);
