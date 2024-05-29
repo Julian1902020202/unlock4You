@@ -32,7 +32,7 @@ server.on('request', (request, response) => {
       const targetUrl = match[1];
 
       // Redirect the request to the proxy server
-      request.url = `/bare/${encodeURIComponent(targetUrl)}`;
+      request.url = `/bare/v2/${encodeURIComponent(targetUrl)}`;
     }
 
     if (custombare.route(request, response)) return true;
