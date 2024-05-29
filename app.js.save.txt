@@ -23,18 +23,6 @@ const server = http.createServer();
 
 server.on('request', (request, response) => {
   try {
-    const { url } = request;
-
-    // Check if the URL matches the pattern /url/google.com
-    const match = url.match(/^\/url\/(.+)/);
-
-    if (match) {
-      const targetUrl = match[1];
-
-      // Redirect the request to the proxy server
-      request.url = `/bare/${targetUrl}`;
-    }
-
     if (custombare.route(request, response)) return true;
 
     if (bareServer.shouldRoute(request)) {
@@ -43,23 +31,22 @@ server.on('request', (request, response) => {
       serve(request, response, err => {
         response.writeHead(err?.statusCode || 500, null, {
           "Content-Type": "text/plain"
-        });
-        response.end(err?.stack);
+        })
+        response.end(err?.stack)
       });
     }
   } catch (e) {
     response.writeHead(500, "Internal Server Error", {
       "Content-Type": "text/plain"
-    });
-    response.end(e.stack);
+    })
+    response.end(e.stack)
   }
 });
-
 server.on('upgrade', (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
-    bareServer.routeUpgrade(req, socket, head);
+  bareServer.routeUpgrade(req, socket, head);
   } else {
-    socket.end();
+  socket.end();
   }
 });
 
@@ -67,10 +54,10 @@ server.listen(PORT);
 
 if (process.env.UNSAFE_CONTINUE)
   process.on("uncaughtException", (err, origin) => {
-    console.error(`Critical error (${origin}):`);
-    console.error(err);
-    console.error("UNSAFELY CONTINUING EXECUTION");
-    console.error();
-  });
+    console.error(`Critical error (${origin}):`)
+    console.error(err)
+    console.error("UNSAFELY CONTINUING EXECUTION")
+    console.error()
+  })
 
 console.log(`Server running at http://localhost:${PORT}/.`);
