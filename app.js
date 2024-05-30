@@ -87,3 +87,8 @@ if (process.env.UNSAFE_CONTINUE)
   });
 
 console.log(`Server running at http://localhost:${PORT}/.`);
+
+// Add additional logging for debugging
+bareServer.on('error', (err, req) => {
+  console.error(`BareServer error on request to ${req.url}:`, err);
+});
